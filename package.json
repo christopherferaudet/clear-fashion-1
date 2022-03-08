@@ -1,6 +1,12 @@
 {
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
+<<<<<<< HEAD
     "nodemon": "^2.0.15"
+=======
+    "fund": "^1.0.0",
+    "node": "^17.4.0",
+    "node-fetch": "^2.6.7"
+>>>>>>> 5eacbb4f51647506cd70a4b5e698f8a69512bfdf
   }
 }
