@@ -8,7 +8,6 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 let client = null;
 let database = null;
-let collectionProducts;
 
 /**
  * Get db connection
@@ -41,13 +40,11 @@ const getDB = module.exports.getDB = async () => {
 module.exports.insert = async products => {
   try {
     const db = await getDB();
-    
     const collection = db.collection(MONGODB_COLLECTION);
-    await collection.deleteMany();
     // More details
     // https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#insert-several-document-specifying-an-id-field
     const result = await collection.insertMany(products, {'ordered': false});
-    console.log(result);
+
     return result;
   } catch (error) {
     console.error('🚨 collection.insertMany...', error);
@@ -68,6 +65,24 @@ module.exports.find = async query => {
     const db = await getDB();
     const collection = db.collection(MONGODB_COLLECTION);
     const result = await collection.find(query).toArray();
+
+    return result;
+  } catch (error) {
+    console.error('🚨 collection.find...', error);
+    return null;
+  }
+};
+
+/**
+ * Find products with aggregate functions (sort)
+ * @param {Array} query
+ * @return {Array}
+ */
+module.exports.aggregate = async query => {
+  try {
+    const db = await getDB();
+    const collection = db.collection(MONGODB_COLLECTION);
+    const result = await collection.aggregate(query).toArray();
 
     return result;
   } catch (error) {

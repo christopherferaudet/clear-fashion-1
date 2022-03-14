@@ -22,6 +22,8 @@ async function sandbox () {
       console.log(`👕 ${results.length} products found`);
 
       products.push(results);
+
+      console.log('Number of products: ', products.length);
     }
 
     pages = [
