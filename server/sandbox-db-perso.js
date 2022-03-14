@@ -64,6 +64,62 @@ async function sandbox(){
         products = products.flat();
         console.log('Total number of products: ', products.length);
 
+        console.log(products);
+
+        /*
+        
+        // ----- Connection to the database -----
+        const resultDb = await db.insert(products);
+
+        console.log(`💽 ${resultDb.insertedCount} inserted products.`);
+
+        // ----- Retrieve products of a certain brand -----
+
+        let brand = 'dedicated';
+
+        console.log(`💽  Find ${brand} products only`);
+        
+        const brandOnly = await db.find({'brand': brand});
+        
+        console.log(`👕 ${brandOnly.length} total of products found for ${brand}`);
+        
+        console.log(brandOnly);
+
+        brand = 'adresseparis';
+
+        console.log(`💽  Find ${brand} products only`);
+        
+        brandOnly = await db.find({'brand': brand});
+        
+        console.log(`👕 ${brandOnly.length} total of products found for ${brand}`);
+        
+        console.log(brandOnly);
+
+        brand = 'montlimart';
+
+        console.log(`💽  Find ${brand} products only`);
+        
+        brandOnly = await db.find({'brand': brand});
+        
+        console.log(`👕 ${brandOnly.length} total of products found for ${brand}`);
+        
+        console.log(brandOnly);
+
+        // ----- Retrieve products under a certain price ------
+        let price = 50;
+
+        console.log(`💽 Find products under ${price} only`);
+
+        const underPrice = await db.find({'price' : {'lte' : price}});
+
+        console.log(`👕 ${underPrice.length} products under ${price} (e).`)
+
+        console.log(underPrice);
+
+        db.close();
+
+        */
+
     } catch(e){
         //console.log(e);
         console.error(e);
