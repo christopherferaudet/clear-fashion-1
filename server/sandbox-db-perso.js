@@ -65,8 +65,6 @@ async function sandbox(){
         console.log('Total number of products: ', products.length);
 
         console.log(products);
-
-        /*
         
         // ----- Connection to the database -----
         const resultDb = await db.insert(products);
@@ -79,11 +77,11 @@ async function sandbox(){
 
         console.log(`💽  Find ${brand} products only`);
         
-        const brandOnly = await db.find({'brand': brand});
+        let brandOnly = await db.find({'brand': brand});
         
         console.log(`👕 ${brandOnly.length} total of products found for ${brand}`);
         
-        console.log(brandOnly);
+        //console.log(brandOnly);
 
         brand = 'adresseparis';
 
@@ -93,7 +91,7 @@ async function sandbox(){
         
         console.log(`👕 ${brandOnly.length} total of products found for ${brand}`);
         
-        console.log(brandOnly);
+        //console.log(brandOnly);
 
         brand = 'montlimart';
 
@@ -103,22 +101,33 @@ async function sandbox(){
         
         console.log(`👕 ${brandOnly.length} total of products found for ${brand}`);
         
-        console.log(brandOnly);
+        //console.log(brandOnly);
 
         // ----- Retrieve products under a certain price ------
-        let price = 50;
+        let price = 30;
 
         console.log(`💽 Find products under ${price} only`);
 
-        const underPrice = await db.find({'price' : {'lte' : price}});
+        let underPrice = await db.find({'price' : {'$lte' : price}});
+        //let underPrice = await db.find({'price' : 39});
 
         console.log(`👕 ${underPrice.length} products under ${price} (e).`)
 
-        console.log(underPrice);
+        //console.log(underPrice);
+
+        // ----- Retrieve all products sorted by price -----
+        let order = 1;
+
+        console.log(`💽 All products sorted (${order})`);
+
+        let sortByPrice = await db.aggregate([{$sort : {price : order}}]);
+
+        console.log(`👕 ${sortByPrice.length} products sorted.`);
+
+        //console.log(sortByPrice);
 
         db.close();
 
-        */
 
     } catch(e){
         //console.log(e);

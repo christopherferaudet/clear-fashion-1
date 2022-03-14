@@ -20,14 +20,14 @@ const parse = data => {
             const price =
                 parseInt($(element)
                     .find('.price').text());
-            const link = $(element).find('.product-name').attr('href');
+            const link = `${$(element).find('.product-name').attr('href')}`;
 
             return { 
                 'name' : name,
                 'link' : link, 
                 'price' : price, 
-                'brand' : 'adresseparis'
-                //'_id' : uuidv5(link, uuidv5.URL)
+                'brand' : 'adresseparis',
+                '_id' : uuidv5(link, uuidv5.URL)
             };
         })
         .get();
