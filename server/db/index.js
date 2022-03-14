@@ -47,7 +47,13 @@ module.exports.insert = async products => {
 
     return result;
   } catch (error) {
-    console.error('🚨 collection.insertMany...', error);
+    // console.error('🚨 collection.insertMany...', error);
+    if (error.message.includes("duplicate key error collection")){
+      console.log("🚨 Some products are already in the database !")
+    }
+    else{
+      console.error('🚨 collection.insertMany...', error);
+    }
     fs.writeFileSync('products.json', JSON.stringify(products));
     return {
       'insertedCount': error.result.nInserted
@@ -72,6 +78,18 @@ module.exports.find = async query => {
     return null;
   }
 };
+
+
+// Find product by id
+module.exports.find_by_id = async id => {
+    // Connection to the data base
+    const db = await getDB();
+    const collection = db.collection(MONGODB_COLLECTION);
+    const products = await collection.find({ "_id": id}).toArray();
+
+    // console.log(products);
+    return (products)
+}
 
 /**
  * Find products with aggregate functions (sort)
@@ -101,3 +119,4 @@ module.exports.close = async () => {
     console.error('🚨 MongoClient.close...', error);
   }
 };
+
