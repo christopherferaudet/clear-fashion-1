@@ -22,6 +22,8 @@ async function sandbox () {
       console.log(`👕 ${results.length} products found`);
 
       products.push(results);
+
+      console.log('Number of products: ', products.length);
     }
 
     pages = [
@@ -50,7 +52,7 @@ async function sandbox () {
     console.log(`👕 ${products.length} total of products found`);
 
     console.log('\n');
-
+    console.log(products[0])
     const result = await db.insert(products);
 
     console.log(`💽  ${result.insertedCount} inserted products`);
