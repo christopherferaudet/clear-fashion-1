@@ -21,7 +21,7 @@ const parse = data => {
             const price =
                 parseInt($(element)
                     .find('.price').text());
-            const link = $(element).find('a').attr('href');
+            const link = `${$(element).find('a').attr('href')}`;
             const last = name[name.length - 1] // last element of the list : color
             name = name[0] + last; // we keep the name and the color of the product
             return {

@@ -113,7 +113,18 @@ async function sandbox(){
 
         console.log(`👕 ${underPrice.length} products under ${price} (e).`)
 
-        console.log(underPrice);
+        //console.log(underPrice);
+
+        // ----- Retrieve all products sorted by price -----
+        let order = 1;
+
+        console.log(`💽 All products sorted (${order})`);
+
+        let sortByPrice = await db.aggregate([{$sort : {price : order}}]);
+
+        console.log(`👕 ${sortByPrice.length} products sorted.`);
+
+        //console.log(sortByPrice);
 
         db.close();
 
