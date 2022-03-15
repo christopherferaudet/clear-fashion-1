@@ -15,23 +15,15 @@ const parse = data => {
       const link = `https://www.loom.fr${$(element)
         .find('.product-title a')
         .attr('href')}`;
-
+      let name = $(element).find('.product-title').text()
+        .trim().replace(/\s/g, ' ');
+      let price = parseInt($(element)
+          .find('.money').text());
       return {
-        link,
+        'name' : name, 
+        'link' : link, 
+        'price' : price,
         'brand': 'loom',
-        'price': parseInt(
-          $(element)
-            .find('.money')
-            .text()
-        ),
-        'name': $(element)
-          .find('.product-title')
-          .text()
-          .trim()
-          .replace(/\s/g, ' '),
-        'photo': $(element)
-          .find('noscript img.product_card__image')
-          .attr('src'),
         '_id': uuidv5(link, uuidv5.URL)
       };
     })
