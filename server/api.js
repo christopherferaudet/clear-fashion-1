@@ -45,9 +45,9 @@ app.get('/products/search',async(request,response)=>{
     
     //if assigned values, write the respectives match requests
     let match_query = {}
-    if( brand === '' &&  price !== '') match_query = {price: price} 
+    if( brand === '' &&  price !== '') match_query = {price:{'$lte':price}}
     else if(brand !== '' && price === '') match_query = {brand: brand}
-    else if(brand !== '' && price !== '') match_query = {brand: brand, price: price}
+    else if(brand !== '' && price !== '') match_query = {brand: brand, price:{'$lte':price}}
   
     query = [
       {'$match' : match_query},
