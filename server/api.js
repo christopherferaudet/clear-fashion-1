@@ -23,14 +23,56 @@ app.get('/', (request, response) => {
 
 
 // Product search, Search for specific product 
+// limit - number of products to return (default: 12)
+// brand - filter by brand (default: All brands)
+// price - filter by price (default: All price)
+
+// http://localhost:8092/products/search?limit=5&brand=loom&price=25
+
 app.get('/products/search',async(request,response)=>{
+  const query_filter=request.query;
+  let brand = '';
+  let price = '';
+  let limit  = 12;
+
+  // get the elements from the url and stack default value if undefined
+  if (query_filter.brand !== undefined) { brand = query_filter.brand }
+  //string to int
+  if (parseInt(query_filter.price) > 0) { price = parseInt(query_filter.price) }
+  if (parseInt(query_filter.limit) > 0) { limit = parseInt(query_filter.limit) }
   
-  const { brand = 'all', price = 'all', limit = 12 } = request.query;
-  let product = await db.find([{'$match': { 'brand': request.params.brand }}]);
   
-  response.send({ "product": product})
+  //if assigned values, write the respectives match requests
+  let match_query = {}
+  if( brand === '' &&  price !== '') match_query = {price: price} 
+  else if(brand !== '' && price === '') match_query = {brand: brand}
+  else if(brand !== '' && price !== '') match_query = {brand: brand, price: price}
+
+  query = [
+    {'$match' : match_query},
+    {'$sort' : {price:1}}, //by default sort by price
+    {'$limit' : limit} //limit number of products 
+    ]
+  //console.log('Query : ', query);
+  
+  let new_list_products = await db.aggregate(query)
+
+  var data = JSON.stringify({ 
+        "limit": limit, 
+        "total": new_list_products.length,
+        "results": new_list_products},
+        null, 2
+  );
+  
+  
+
+
+  //response.send({'results': new_list_products});
+  response.send(data);
+  //response.send(new_list_products);
 
 });
+
 
 
 // Products by id
