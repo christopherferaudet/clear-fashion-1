@@ -22,6 +22,16 @@ app.get('/', (request, response) => {
 
 
 
+// Fetch all products 
+app.get('/products', async (request, response) => {
+  //console.log(request.params.id)
+  let products= await db.find({});
+  response.send(products);
+
+});
+
+
+
 // Product search, Search for specific product 
 // limit - number of products to return (default: 12)
 // brand - filter by brand (default: All brands)
