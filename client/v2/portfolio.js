@@ -1,6 +1,7 @@
 // Invoking strict mode https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode#invoking_strict_mode
 'use strict';
 
+
 // current products on the page
 let currentProducts = [];
 let currentPagination = {};
@@ -12,8 +13,10 @@ let allProducts = [];
 let newProducts = [];
 
 
-// Inititiate selectors to sort or filter, found in the html page
-// To show 12, 24 or 48 products
+
+
+
+
 const selectShow = document.querySelector('#show-select');
 // To select the page to be displayed
 const selectPage = document.querySelector('#page-select');
@@ -29,6 +32,7 @@ const selectSort = document.querySelector('#sort-select');
 const sectionProducts = document.querySelector('#products');
 // Displays the number of products available on the website
 const spanNbProducts = document.querySelector('#nbProducts');
+
 // Displays the number of recent products
 const spanNbNewProducts = document.querySelector('#nbNewProducts');
 // Displays the p50, p90, p95 price values indicator
@@ -40,7 +44,6 @@ const spanLastReleasedDate = document.querySelector('#lastReleasedDate');
 
 // To add a product to the list of favorite products
 const onclick  = document.querySelector('#favorite-product');
-
 
 
 /**
@@ -137,7 +140,7 @@ const renderProducts = products => {
           <span>Price : </span>
           <strong>${product.price} €</strong>
         <div>
-          <input type="checkbox" onclick="checkFavorite('${product.uuid}')" >
+          <input type="checkbox" id="myCheck" onchange="checkFavorite('${product.uuid}')" >
           <label for="favorite-product">Add to favorite</label>
         </div>
       </div>
@@ -152,6 +155,35 @@ const renderProducts = products => {
   console.log("Render products");
 };
 
+function removeItemAll(arr, value) {
+  var i = 0;
+  while (i < arr.length) {
+    if (arr[i] === value) {
+      arr.splice(i, 1);
+    } else {
+      ++i;
+    }
+  }
+  return arr;
+}
+
+function checkFavorite(_uuid)
+{
+  if(favoritesProducts.includes(_uuid)){
+    removeItemAll(favoritesProducts,_uuid);
+  }
+  else{
+    favoritesProducts.push(_uuid);
+    document.getElementById("myCheck").checked = true
+    
+  }
+  window.localStorage.setItem('favorites', JSON.stringify(favoritesProducts));
+  FavoriteProduct=true;
+  return favoritesProducts;
+
+}
+
+
 // function checkFavorite(_uuid)
 // {
 //   favoritesProducts.push(_uuid);
@@ -161,6 +193,7 @@ const renderProducts = products => {
 //     console.log(favoritesProducts[i]);
 //   }
 // }
+
 
 /**
  * Render page selector
